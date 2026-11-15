@@ -1,16 +1,116 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f6f5f2"><meta name="description" content="Your personal AI space to chat, plan, and get things done."><title>Muse — Your personal AI</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css"><script src="/app.js" defer></script></head>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5f0">
+  <meta name="description" content="Your personal AI space to chat, plan, and get things done.">
+  <title>Muse — Your personal AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/premium.css">
+  <script src="/app.js" defer></script>
+  <script src="/polish.js" defer></script>
+</head>
 <body>
-  <section class="auth-screen" id="auth-screen"><form class="auth-card" id="login-form"><div class="welcome-orb">✳</div><div class="eyebrow">YOUR PRIVATE SPACE</div><h1>Welcome back.</h1><p>Sign in to your personal Muse assistant.</p><label>Username<input name="username" autocomplete="username" required></label><label>Password<input name="password" type="password" autocomplete="current-password" required></label><button class="primary-button">Sign in</button><div class="form-error" id="login-error" role="alert"></div><small>Your personal data is stored by this app on its server.</small></form></section>
+  <section class="auth-screen" id="auth-screen">
+    <form class="auth-card" id="login-form">
+      <div class="welcome-orb">✳</div>
+      <div class="eyebrow">YOUR PRIVATE SPACE</div>
+      <h1>Welcome back.</h1>
+      <p>Sign in to your personal Muse assistant.</p>
+      <label>Email<input name="username" type="email" autocomplete="username" placeholder="you@example.com" required></label>
+      <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+      <button class="primary-button" type="submit">Sign in</button>
+      <div class="form-error" id="login-error" role="alert"></div>
+      <small>Your personal data is stored in your account.</small>
+    </form>
+  </section>
+
   <div class="app-shell" id="app-shell" hidden>
-    <aside class="sidebar" id="sidebar"><a class="brand" href="#chat"><span class="brand-mark"><span></span><span></span><span></span></span><span>muse</span></a><button class="new-chat" id="new-chat"><span class="plus">＋</span> New conversation</button><div class="sidebar-label">YOUR SPACE</div><nav class="side-nav" aria-label="Main navigation"><button class="nav-item active" data-page="chat"><span class="nav-icon">✳</span> Chat</button><button class="nav-item" data-page="dashboard"><span class="nav-icon">▦</span> Overview</button><button class="nav-item" data-page="tasks"><span class="nav-icon">✓</span> My tasks</button><button class="nav-item" data-page="planner"><span class="nav-icon">◷</span> Daily planner</button><button class="nav-item" data-page="memory"><span class="nav-icon">✦</span> Personal memory</button><button class="nav-item" data-page="calendar"><span class="nav-icon">▣</span> Calendar & email</button></nav><div class="sidebar-spacer"></div><div class="privacy-note"><span class="privacy-dot"></span> Private personal workspace</div><button class="logout-button" id="logout-button">Sign out</button></aside>
-    <main class="main-panel"><header class="topbar"><button class="mobile-menu" id="mobile-menu" aria-label="Toggle menu">☰</button><div class="topbar-title" id="page-title">Your assistant <span class="online-dot"></span></div><div class="topbar-actions"><button class="clear-button" id="clear-chat">Clear chat</button><span class="user-chip" id="user-chip"></span></div></header>
-      <section class="page-view active" id="page-chat"><div class="conversation" id="conversation" aria-live="polite" aria-label="Conversation"><div class="welcome" id="welcome"><div class="welcome-orb">✳</div><div class="eyebrow">A LITTLE SPACE TO THINK</div><h1>Good to have you here.</h1><p>What’s on your mind? I’m here to help you make sense of it.</p><div class="suggestions"><button class="suggestion" data-prompt="Help me make a simple plan for today."><span class="suggestion-icon peach">◷</span><span><strong>Plan my day</strong><small>Make today feel manageable</small></span><span class="suggestion-arrow">↗</span></button><button class="suggestion" data-prompt="I have a decision to make. Help me think through it by asking one question at a time."><span class="suggestion-icon lavender">✳</span><span><strong>Talk something through</strong><small>Untangle a thought or decision</small></span><span class="suggestion-arrow">↗</span></button><button class="suggestion" data-prompt="Help me get started on something I have been putting off. Ask what it is and help me find one small first step."><span class="suggestion-icon mint">⌁</span><span><strong>Find a first step</strong><small>Get unstuck and move forward</small></span><span class="suggestion-arrow">↗</span></button></div></div><div class="messages" id="messages"></div></div><footer class="composer-area"><form class="composer" id="chat-form"><textarea id="message-input" rows="1" maxlength="8000" placeholder="Message Muse…" aria-label="Message Muse"></textarea><div class="composer-bottom"><span class="composer-hint">A thoughtful companion for your everyday</span><div class="composer-tools"><button type="button" class="voice-button" id="voice-button" title="Voice input" aria-label="Start voice input">🎙</button><button class="send-button" id="send-button" type="submit" aria-label="Send message">↑</button></div></div></form><p class="disclaimer">Muse can make mistakes. Check important information.</p></footer></section>
-      <section class="page-view" id="page-dashboard"><div class="page-content"><div class="page-heading"><div class="eyebrow">YOUR PERSONAL SPACE</div><h1 id="greeting">A little more focus, a little less overwhelm.</h1><p>Here’s a gentle overview of what’s on your plate.</p></div><div class="stat-grid"><article class="stat-card"><span>Open tasks</span><strong id="stat-open">0</strong><small>Things you can move forward</small></article><article class="stat-card"><span>Completed</span><strong id="stat-done">0</strong><small>Wins so far</small></article><article class="stat-card"><span>Today's events</span><strong id="stat-events">—</strong><small id="connection-summary">Connect Google to see your day</small></article></div><div class="dashboard-grid"><article class="panel"><div class="panel-head"><h2>Next up</h2><button class="text-button" data-goto="tasks">See all tasks →</button></div><div id="dashboard-tasks" class="task-list"></div></article><article class="panel quote-panel"><span class="suggestion-icon lavender">✳</span><h2>Make room to think.</h2><p>You don’t have to do everything at once. Choose one meaningful next step.</p><button class="primary-button" data-goto="planner">Plan my day</button></article></div></div></section>
-      <section class="page-view" id="page-tasks"><div class="page-content"><div class="page-heading"><div class="eyebrow">YOUR TO-DO LIST</div><h1>Make progress, one thing at a time.</h1><p>Tasks are private to your signed-in assistant account.</p></div><form class="task-form" id="task-form"><input id="task-title" placeholder="What would you like to get done?" maxlength="240" required><input id="task-date" type="date" aria-label="Due date"><select id="task-priority" aria-label="Task priority"><option value="medium">Medium</option><option value="high">High</option><option value="low">Low</option></select><button class="primary-button">Add task</button></form><div class="task-filters"><button class="filter-button active" data-filter="open">To do</button><button class="filter-button" data-filter="all">All tasks</button><button class="filter-button" data-filter="completed">Completed</button></div><div class="task-list full-task-list" id="tasks-list"></div></div></section>
-      <section class="page-view" id="page-planner"><div class="page-content"><div class="page-heading"><div class="eyebrow">A GENTLER DAILY PLAN</div><h1>Your day, with room to breathe.</h1><p>A suggested focus list based on your open tasks and connected calendar.</p></div><div class="planner-actions"><button class="primary-button" id="refresh-plan">Refresh my plan</button><span id="planner-date"></span></div><div class="planner-columns"><article class="panel"><h2>Today's focus</h2><div id="planner-tasks" class="task-list"></div></article><article class="panel"><h2>Calendar today</h2><div id="planner-events" class="event-list"><div class="empty-state">Connect Google Calendar on the Calendar & email page, or use your task list to plan.</div></div></article></div><div class="panel plan-note"><strong>A note from Muse</strong><p>Leave some space between tasks for breaks, unexpected things, and a little breathing room.</p></div></div></section>
-      <section class="page-view" id="page-memory"><div class="page-content"><div class="page-heading"><div class="eyebrow">PERSONALIZE YOUR ASSISTANT</div><h1>What would you like Muse to remember?</h1><p>These notes help personalize replies. Keep them editable and avoid secrets or highly sensitive information.</p></div><div class="panel memory-editor"><label for="memory-input">Your personal context</label><textarea id="memory-input" maxlength="5000" rows="9" placeholder="For example: I prefer concise answers. I work best in the morning. I’m currently learning Spanish."></textarea><div class="memory-footer"><span id="memory-status">Saved to your account</span><span id="memory-count">0/5000</span></div><div class="memory-actions"><button class="primary-button" id="save-memory">Save memory</button><button class="secondary-button" id="clear-memory">Clear memory</button></div></div><div class="privacy-callout"><strong>Your control matters.</strong> Memory is used as context for your AI conversations. It is not a password manager. You can edit or clear it at any time.</div></div></section>
-      <section class="page-view" id="page-calendar"><div class="page-content"><div class="page-heading"><div class="eyebrow">OPTIONAL GOOGLE CONNECTION</div><h1>Calendar & email, in one place.</h1><p>Connect Google for read-only access to upcoming events and recent inbox messages. Muse will not send or modify email or calendar entries.</p></div><div class="panel integration-card"><div><h2 id="google-status">Google is not connected</h2><p id="google-description">Connect Google Calendar and Gmail using read-only permissions. You can disconnect at any time.</p></div><div class="integration-actions"><a class="primary-button link-button" id="connect-google" href="/auth/google">Connect Google</a><button class="secondary-button" id="disconnect-google" hidden>Disconnect</button></div></div><div class="integration-grid"><article class="panel"><div class="panel-head"><h2>Upcoming calendar</h2><button class="text-button" id="reload-calendar">Refresh</button></div><div class="event-list" id="calendar-events"><div class="empty-state">Connect Google to show upcoming events.</div></div></article><article class="panel"><div class="panel-head"><h2>Recent inbox</h2><button class="text-button" id="reload-emails">Refresh</button></div><div class="email-list" id="email-list"><div class="empty-state">Connect Google to show recent inbox messages.</div></div><p class="fine-print">Messages are shown as metadata and snippets. Email content is not sent to Muse automatically.</p></article></div></div></section>
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#chat" aria-label="Muse home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span><span>muse</span>
+      </a>
+      <button class="new-chat" id="new-chat"><span class="plus">＋</span> New conversation</button>
+      <div class="sidebar-label">YOUR SPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-page="chat"><span class="nav-icon">✳</span> Chat</button>
+        <button class="nav-item" data-page="dashboard"><span class="nav-icon">▦</span> Overview</button>
+        <button class="nav-item" data-page="tasks"><span class="nav-icon">✓</span> My tasks</button>
+        <button class="nav-item" data-page="planner"><span class="nav-icon">◷</span> Daily planner</button>
+        <button class="nav-item" data-page="memory"><span class="nav-icon">✦</span> Personal memory</button>
+        <button class="nav-item" data-page="calendar"><span class="nav-icon">▣</span> Calendar &amp; email</button>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="privacy-note"><span class="privacy-dot"></span> Private personal workspace</div>
+      <button class="logout-button" id="logout-button">Sign out</button>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" aria-label="Toggle menu">☰</button>
+        <div class="topbar-title" id="page-title">Your assistant <span class="online-dot"></span></div>
+        <div class="topbar-actions"><button class="clear-button" id="clear-chat">Clear chat</button><span class="user-chip" id="user-chip"></span></div>
+      </header>
+
+      <section class="page-view active" id="page-chat">
+        <div class="conversation" id="conversation" aria-live="polite" aria-label="Conversation">
+          <div class="welcome" id="welcome">
+            <div class="welcome-orb">✳</div><div class="eyebrow">A LITTLE SPACE TO THINK</div>
+            <h1>Good to have you here.</h1><p>What’s on your mind? I’m here to help you make sense of it.</p>
+            <div class="suggestions">
+              <button class="suggestion" data-prompt="Help me make a simple plan for today."><span class="suggestion-icon peach">◷</span><span><strong>Plan my day</strong><small>Make today feel manageable</small></span><span class="suggestion-arrow">↗</span></button>
+              <button class="suggestion" data-prompt="I have a decision to make. Help me think through it by asking one question at a time."><span class="suggestion-icon lavender">✳</span><span><strong>Talk something through</strong><small>Untangle a thought or decision</small></span><span class="suggestion-arrow">↗</span></button>
+              <button class="suggestion" data-prompt="Help me get started on something I have been putting off. Ask what it is and help me find one small first step."><span class="suggestion-icon mint">⌁</span><span><strong>Find a first step</strong><small>Get unstuck and move forward</small></span><span class="suggestion-arrow">↗</span></button>
+            </div>
+          </div>
+          <div class="messages" id="messages"></div>
+        </div>
+        <footer class="composer-area">
+          <form class="composer" id="chat-form">
+            <textarea id="message-input" rows="1" maxlength="8000" placeholder="Message Muse…" aria-label="Message Muse"></textarea>
+            <div class="composer-bottom"><span class="composer-hint">A thoughtful companion for your everyday</span><div class="composer-tools"><button type="button" class="voice-button" id="voice-button" title="Voice input" aria-label="Start voice input">🎙</button><button class="send-button" id="send-button" type="submit" aria-label="Send message">↑</button></div></div>
+          </form>
+          <p class="disclaimer">Muse can make mistakes. Check important information.</p>
+        </footer>
+      </section>
+
+      <section class="page-view" id="page-dashboard"><div class="page-content">
+        <div class="page-heading"><div class="eyebrow">YOUR PERSONAL SPACE</div><h1 id="greeting">A little more focus, a little less overwhelm.</h1><p>Here’s a gentle overview of what’s on your plate.</p></div>
+        <div class="stat-grid"><article class="stat-card"><span>Open tasks</span><strong id="stat-open">0</strong><small>Things you can move forward</small></article><article class="stat-card"><span>Completed</span><strong id="stat-done">0</strong><small>Wins so far</small></article><article class="stat-card"><span>Today's events</span><strong id="stat-events">—</strong><small id="connection-summary">Connect Google to see your day</small></article></div>
+        <div class="dashboard-grid"><article class="panel"><div class="panel-head"><h2>Next up</h2><button class="text-button" data-goto="tasks">See all tasks →</button></div><div id="dashboard-tasks" class="task-list"></div></article><article class="panel quote-panel"><span class="suggestion-icon lavender">✳</span><h2>Make room to think.</h2><p>You don’t have to do everything at once. Choose one meaningful next step.</p><button class="primary-button" data-goto="planner">Plan my day</button></article></div>
+      </div></section>
+
+      <section class="page-view" id="page-tasks"><div class="page-content">
+        <div class="page-heading"><div class="eyebrow">YOUR TO-DO LIST</div><h1>Make progress, one thing at a time.</h1><p>Tasks are private to your signed-in assistant account.</p></div>
+        <form class="task-form" id="task-form"><input id="task-title" placeholder="What would you like to get done?" maxlength="240" required><input id="task-date" type="date" aria-label="Due date"><select id="task-priority" aria-label="Task priority"><option value="medium">Medium</option><option value="high">High</option><option value="low">Low</option></select><button class="primary-button">Add task</button></form>
+        <div class="task-filters"><button class="filter-button active" data-filter="open">To do</button><button class="filter-button" data-filter="all">All tasks</button><button class="filter-button" data-filter="completed">Completed</button></div><div class="task-list full-task-list" id="tasks-list"></div>
+      </div></section>
+
+      <section class="page-view" id="page-planner"><div class="page-content">
+        <div class="page-heading"><div class="eyebrow">A GENTLER DAILY PLAN</div><h1>Your day, with room to breathe.</h1><p>A suggested focus list based on your open tasks and connected calendar.</p></div>
+        <div class="planner-actions"><button class="primary-button" id="refresh-plan">Refresh my plan</button><span id="planner-date"></span></div>
+        <div class="planner-columns"><article class="panel"><h2>Today's focus</h2><div id="planner-tasks" class="task-list"></div></article><article class="panel"><h2>Calendar today</h2><div id="planner-events" class="event-list"><div class="empty-state">Connect Google Calendar on the Calendar &amp; email page, or use your task list to plan.</div></div></article></div>
+        <div class="panel plan-note"><strong>A note from Muse</strong><p>Leave some space between tasks for breaks, unexpected things, and a little breathing room.</p></div>
+      </div></section>
+
+      <section class="page-view" id="page-memory"><div class="page-content">
+        <div class="page-heading"><div class="eyebrow">PERSONALIZE YOUR ASSISTANT</div><h1>What would you like Muse to remember?</h1><p>These notes help personalize replies. Keep them editable and avoid secrets or highly sensitive information.</p></div>
+        <div class="panel memory-editor"><label for="memory-input">Your personal context</label><textarea id="memory-input" maxlength="5000" rows="9" placeholder="For example: I prefer concise answers. I work best in the morning. I’m currently learning Spanish."></textarea><div class="memory-footer"><span id="memory-status">Saved to your account</span><span id="memory-count">0/5000</span></div><div class="memory-actions"><button class="primary-button" id="save-memory">Save memory</button><button class="secondary-button" id="clear-memory">Clear memory</button></div></div>
+        <div class="privacy-callout"><strong>Your control matters.</strong> Memory is used as context for your AI conversations. It is not a password manager. You can edit or clear it at any time.</div>
+      </div></section>
+
+      <section class="page-view" id="page-calendar"><div class="page-content">
+        <div class="page-heading"><div class="eyebrow">OPTIONAL GOOGLE CONNECTION</div><h1>Calendar &amp; email, in one place.</h1><p>Connect Google for read-only access to upcoming events and recent inbox messages. Muse will not send or modify email or calendar entries.</p></div>
+        <div class="panel integration-card"><div><h2 id="google-status">Google is not connected</h2><p id="google-description">Connect Google Calendar and Gmail using read-only permissions. You can disconnect at any time.</p></div><div class="integration-actions"><a class="primary-button link-button" id="connect-google" href="/auth/google">Connect Google</a><button class="secondary-button" id="disconnect-google" hidden>Disconnect</button></div></div>
+        <div class="integration-grid"><article class="panel"><div class="panel-head"><h2>Upcoming calendar</h2><button class="text-button" id="reload-calendar">Refresh</button></div><div class="event-list" id="calendar-events"><div class="empty-state">Connect Google to show upcoming events.</div></div></article><article class="panel"><div class="panel-head"><h2>Recent inbox</h2><button class="text-button" id="reload-emails">Refresh</button></div><div class="email-list" id="email-list"><div class="empty-state">Connect Google to show recent inbox messages.</div></div><p class="fine-print">Messages are shown as metadata and snippets. Email content is not sent to Muse automatically.</p></article></div>
+      </div></section>
     </main>
-  </div><div class="mobile-scrim" id="mobile-scrim"></div><div class="toast" id="toast" role="status"></div>
-</body></html>
+  </div>
+  <div class="mobile-scrim" id="mobile-scrim"></div><div class="toast" id="toast" role="status"></div>
+</body>
+</html>
