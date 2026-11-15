@@ -1,9 +1,14 @@
 {
   "name": "personal-ai-assistant",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
-  "description": "Muse — multi-user AI productivity assistant with PostgreSQL, PWA, and bounded integrations.",
-  "scripts": { "start": "node server.js", "dev": "node --watch server.js", "db:migrate": "node scripts/migrate.js" },
+  "description": "Muse — multi-user AI productivity assistant with PostgreSQL and optional integrations.",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:migrate": "node scripts/migrate.js",
+    "check": "node --check server.js && node --check db.js && node --check public/app.js && node --check public/polish.js"
+  },
   "engines": { "node": ">=20" },
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -1,34 +1,36 @@
-# Muse — Premium Personal AI Assistant
+# Muse — Personal AI Assistant
 
-Muse is an installable, responsive personal productivity web app. The repository now includes a polished UI layer, PostgreSQL-backed multi-user accounts, user-scoped memory and tasks, a limited AI task-creation action, optional read-only Google integrations, and starter deployment configuration.
+## Setup
+Requires Node.js 20+, PostgreSQL, and optionally OpenAI / Google OAuth credentials.
 
-## Features
+1. Copy `.env.example` to `.env`. Set `DATABASE_URL`, a random `SESSION_SECRET` (at least 32 characters), a 64-hex-character `APP_ENCRYPTION_KEY`, and `OPENAI_API_KEY` if using chat.
+2. Start PostgreSQL and create the database in `DATABASE_URL`.
+3. Run `npm install`, `npm run db:migrate`, `npm run check`, and `npm start`.
+4. Visit `http://localhost:3000`; use **New to Muse? Create an account** to register. Account passwords must be at least 12 characters.
 
-- Email/password registration and login with bcrypt hashes and per-user PostgreSQL data isolation.
-- Persistent memory and task lists; AI task creation is limited to direct user requests.
-- Daily planner, dashboard, Google Calendar/Gmail read-only views, voice dictation, focus timer, and task CSV export.
-- Installable PWA shell for mobile browsers. This is not a native iOS/Android binary; use “Add to Home Screen” or “Install app” in a supported browser.
-- Optional Google OAuth scopes are read-only; the assistant does not send emails or change calendar events.
+## Integrated features
 
-## Local setup
+PostgreSQL stores user accounts, profiles, tasks, Google connections, and sessions. Passwords are bcrypt-hashed. Workspace queries are scoped to the logged-in user. The AI has one limited write action: create a task when explicitly requested. Google Calendar and Gmail are optional read-only integrations; tokens are encrypted at rest. The responsive UI includes dashboard, task list, planner, voice input, focus timer, CSV export, and PWA install support.
 
-1. Copy `.env.example` to `.env`. Configure `DATABASE_URL`, `SESSION_SECRET` (32+ random characters), `APP_ENCRYPTION_KEY` (64 hex characters), and `OPENAI_API_KEY`.
-2. Start PostgreSQL and create the database.
-3. Run `npm install`, `npm run db:migrate`, and `npm start`.
-4. Visit `http://localhost:3000`, create an account, and sign in.
+## Secrets and sessions
 
-For Google OAuth, enable Gmail and Calendar APIs, configure OAuth credentials and the callback URL in `.env`, then connect from Calendar & email. Email snippets are shown in the integration page and are not automatically included in chat prompts.
+Never commit `.env` or put secrets in frontend files. Production requires HTTPS, a strong `SESSION_SECRET`, PostgreSQL, and a stable 32-byte encryption key encoded as 64 hex characters. The session cookie is HTTP-only, SameSite=Lax, and Secure in production; sessions are stored in PostgreSQL. `TRUST_PROXY=true` should only be used when the service is behind the hosting provider's trusted proxy. `APP_ENCRYPTION_KEY` must be preserved; losing/changing it makes existing Google tokens unreadable.
 
-## Deployment and security
+Generate values locally and keep them private:
 
-`Dockerfile` and `render.yaml` are deployment starting points, not a deployment already performed. Review the provider's current blueprint syntax, choose a supported managed PostgreSQL plan, configure HTTPS and trusted proxy settings, and enter secrets via the hosting dashboard. `APP_ENCRYPTION_KEY` must be a manually supplied 32-byte key represented as 64 hex characters; preserve it securely or existing Google tokens cannot be decrypted. Do not commit credentials, user data, or `.env`.
-
-Before exposing the app publicly, security-review account recovery and email verification, session-store behavior, backups/restore, rate limiting at the edge, database TLS, monitoring, privacy disclosures, and OAuth consent verification. Multi-user auth does not by itself make the app production-certified. Review model provider data practices before placing personal data in memory or chat.
-
-Generate secrets locally (keep the output private):
-
-```bash
-openssl rand -hex 32  # SESSION_SECRET (32 bytes)
-openssl rand -hex 32  # APP_ENCRYPTION_KEY (exactly 64 hex characters)
+```sh
+openssl rand -hex 32  # SESSION_SECRET
+openssl rand -hex 32  # APP_ENCRYPTION_KEY
 ```
 
+## Google OAuth
+Enable Gmail and Calendar APIs; set OAuth credentials and the exact callback URI `https://YOUR_HOST/auth/google/callback` (local: `http://localhost:3000/auth/google/callback`). The app asks only for `gmail.readonly` and `calendar.events.readonly`. It does not send emails or edit events. Snippets are not sent to chat automatically.
+
+## Deployment
+A Dockerfile and Render blueprint are included as deployment configuration, but no deployment has been performed. Create a managed PostgreSQL database with your hosting provider, set its `DATABASE_URL` as a secret, and configure all remaining environment variables in the provider dashboard. Review the provider's current blueprint syntax, database TLS options, backup policies, and costs. The container runs the idempotent schema migration at startup and exposes `/api/health`.
+
+Before a public launch, add and independently review email verification, account recovery, monitoring, abuse controls, data retention and privacy disclosures, backup/restore drills, and OAuth consent verification. This starter is not security-certified. Review the model provider's data practices before sending personal memory or messages.
+
+## Validate
+
+`npm run check` performs JavaScript syntax checks. For a live smoke test, configure PostgreSQL and secrets, start the app, and visit `/api/health`; then test registration, login/logout, task isolation between two accounts, memory save/load, and Google disconnect. Browser-based end-to-end testing was not run from this repository-editing environment.
