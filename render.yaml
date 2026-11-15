@@ -1,3 +1,5 @@
+/* This managed PostgreSQL blueprint and service configuration are deployment starters.
+   Set APP_ENCRYPTION_KEY manually to 64 hex chars; do not generate an arbitrary string. */
 services:
   - type: web
     name: muse-assistant
@@ -16,7 +18,7 @@ services:
       - key: SESSION_SECRET
         generateValue: true
       - key: APP_ENCRYPTION_KEY
-        generateValue: true
+        sync: false
       - key: OPENAI_API_KEY
         sync: false
       - key: OPENAI_MODEL
@@ -31,10 +33,3 @@ services:
     name: muse-db
     runtime: docker
     plan: starter
-    envVars:
-      - key: POSTGRES_DB
-        value: muse
-      - key: POSTGRES_USER
-        value: muse
-      - key: POSTGRES_PASSWORD
-        generateValue: true
