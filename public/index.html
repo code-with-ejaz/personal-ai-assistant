@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f2">
+  <meta name="description" content="A calm, personal space to think, plan, and get things done with AI.">
+  <title>Muse — Your personal AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="/" aria-label="Muse home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>muse</span>
+      </a>
+      <button class="new-chat" id="new-chat"><span class="plus">＋</span> New conversation</button>
+      <div class="sidebar-label">YOUR SPACE</div>
+      <nav class="side-nav" aria-label="Assistant tools">
+        <button class="nav-item active" data-prompt="Help me plan my day. Ask what I need to get done, then help me create a realistic schedule."><span class="nav-icon">◷</span> Daily planning</button>
+        <button class="nav-item" data-prompt="Help me think through an idea. Ask me a few thoughtful questions and help me shape it."><span class="nav-icon">✳</span> Brainstorm</button>
+        <button class="nav-item" data-prompt="Help me write something. Ask me what I am writing, who it is for, and what tone I want."><span class="nav-icon">↗</span> Writing</button>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <section class="memory-card">
+        <div class="memory-heading"><span class="memory-symbol">✦</span><span>Your memory</span></div>
+        <p>Share a little context so Muse can personalize replies. This stays in this browser.</p>
+        <textarea id="memory-input" rows="3" maxlength="2000" placeholder="I prefer concise answers…"></textarea>
+        <div class="memory-footer"><span id="memory-status">Saved on this device</span><span id="memory-count">0/2000</span></div>
+      </section>
+      <div class="privacy-note"><span class="privacy-dot"></span> Your chats stay in this browser</div>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" aria-label="Toggle menu">☰</button>
+        <div class="topbar-title">Personal assistant <span class="online-dot"></span></div>
+        <button class="clear-button" id="clear-chat" title="Clear this conversation">Clear chat</button>
+      </header>
+      <section class="conversation" id="conversation" aria-live="polite" aria-label="Conversation">
+        <div class="welcome" id="welcome">
+          <div class="welcome-orb"><span>✳</span></div>
+          <div class="eyebrow">A LITTLE SPACE TO THINK</div>
+          <h1>Good to have you here.</h1>
+          <p>What’s on your mind? I’m here to help you make sense of it.</p>
+          <div class="suggestions">
+            <button class="suggestion" data-prompt="Help me make a simple plan for today."><span class="suggestion-icon peach">◷</span><span><strong>Plan my day</strong><small>Make today feel manageable</small></span><span class="suggestion-arrow">↗</span></button>
+            <button class="suggestion" data-prompt="I have a decision to make. Help me think through it by asking one question at a time."><span class="suggestion-icon lavender">✳</span><span><strong>Talk something through</strong><small>Untangle a thought or decision</small></span><span class="suggestion-arrow">↗</span></button>
+            <button class="suggestion" data-prompt="Help me get started on something I have been putting off. Ask what it is and help me find one small first step."><span class="suggestion-icon mint">⌁</span><span><strong>Find a first step</strong><small>Get unstuck and move forward</small></span><span class="suggestion-arrow">↗</span></button>
+          </div>
+        </div>
+        <div class="messages" id="messages"></div>
+      </section>
+      <footer class="composer-area">
+        <form class="composer" id="chat-form">
+          <textarea id="message-input" rows="1" maxlength="8000" placeholder="Message Muse…" aria-label="Message Muse"></textarea>
+          <div class="composer-bottom"><span class="composer-hint">A thoughtful companion for your everyday</span><button class="send-button" id="send-button" type="submit" aria-label="Send message">↑</button></div>
+        </form>
+        <p class="disclaimer">Muse can make mistakes. Check important information.</p>
+      </footer>
+    </main>
+  </div>
+  <div class="mobile-scrim" id="mobile-scrim"></div>
+</body>
+</html>
