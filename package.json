@@ -1,20 +1,20 @@
 {
   "name": "personal-ai-assistant",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "A personal AI assistant with tasks, memory, planning, voice, and optional Google read-only integrations.",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
-  },
+  "description": "Muse — multi-user AI productivity assistant with PostgreSQL, PWA, and bounded integrations.",
+  "scripts": { "start": "node server.js", "dev": "node --watch server.js", "db:migrate": "node scripts/migrate.js" },
   "engines": { "node": ">=20" },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-pg-simple": "^10.0.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-rate-limit": "^7.5.0",
     "express-session": "^1.18.1",
     "googleapis": "^144.0.0",
     "helmet": "^8.0.0",
-    "openai": "^4.77.0"
+    "openai": "^4.77.0",
+    "pg": "^8.13.1"
   }
 }

@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: muse-assistant
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "true"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: muse-db
+          property: connectionString
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: APP_ENCRYPTION_KEY
+        generateValue: true
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REDIRECT_URI
+        sync: false
+  - type: pserv
+    name: muse-db
+    runtime: docker
+    plan: starter
+    envVars:
+      - key: POSTGRES_DB
+        value: muse
+      - key: POSTGRES_USER
+        value: muse
+      - key: POSTGRES_PASSWORD
+        generateValue: true

@@ -1,0 +1,10 @@
+{
+  "name": "Muse Personal Assistant",
+  "short_name": "Muse",
+  "description": "A calm space to chat, plan, and get things done.",
+  "start_url": "/#chat",
+  "display": "standalone",
+  "background_color": "#f7f6f3",
+  "theme_color": "#f7f6f3",
+  "icons": [{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
